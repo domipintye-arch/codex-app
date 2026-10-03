@@ -5,68 +5,216 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CODEX AI - EXTREME</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Courier New", Courier, monospace; }
-        body { background-color: #050505; color: #00ff3c; display: flex; flex-direction: column; height: 100vh; padding: 15px; overflow: hidden; border: 3px solid #ff0000; box-shadow: inset 0 0 20px #ff0000; }
-        .header { text-align: center; padding: 10px; background: linear-gradient(180deg, #100000 0%, #000 100%); border-bottom: 2px dashed #ff0000; margin-bottom: 15px; }
-        .creator-tag { font-size: 0.8rem; color: #ffffff; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 5px #fff; margin-bottom: 5px; }
-        .title { font-size: 2.2rem; font-weight: 900; color: #ff0000; text-shadow: 0 0 10px #ff0000; letter-spacing: 2px; }
-        .display-container { flex: 1; background-color: #0a0a0a; border: 2px solid #333; border-radius: 5px; padding: 15px; overflow-y: auto; margin-bottom: 15px; position: relative; }
-        .msg { margin-bottom: 12px; line-height: 1.4; font-size: 0.95rem; word-wrap: break-word; }
-        .msg.user { color: #00ffff; text-shadow: 0 0 3px #00ffff; }
-        .msg.ai { color: #ff0055; text-shadow: 0 0 3px #ff0055; border-left: 3px solid #ff0055; padding-left: 8px; }
-        .control-panel { display: flex; gap: 10px; background-color: #111; padding: 10px; border: 1px solid #ff0000; border-radius: 5px; }
-        .input-box { flex: 1; background-color: #000; border: 1px solid #00ff3c; color: #00ff3c; padding: 12px; font-size: 1rem; outline: none; }
-        .send-btn { background: linear-gradient(180deg, #ff0000 0%, #880000 100%); color: #ffffff; border: none; padding: 0 25px; font-size: 1rem; font-weight: bold; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: #050505;
+            color: #00ff3c;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            padding: 15px;
+            overflow: hidden;
+            border: 3px solid #ff0000;
+            box-shadow: inset 0 0 20px #ff0000;
+        }
+
+        /* Neonos, extrémebb felső sáv */
+        .header {
+            text-align: center;
+            padding: 10px;
+            background: linear-gradient(180deg, #100000 0%, #000 100%);
+            border-bottom: 2px dashed #ff0000;
+            margin-bottom: 15px;
+        }
+
+        .creator-tag {
+            font-size: 0.8rem;
+            color: #ffffff;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #fff;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000, 0 0 20px #550000;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        /* Cyberpunk kijelző és rács hatás */
+        .display-container {
+            flex: 1;
+            background-color: #0a0a0a;
+            border: 2px solid #333;
+            border-radius: 5px;
+            padding: 15px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            box-shadow: inset 0 0 15px #000;
+            position: relative;
+        }
+
+        .display-container::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 3px, 6px 100%;
+            pointer-events: none;
+        }
+
+        .msg {
+            margin-bottom: 12px;
+            line-height: 1.4;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+        }
+
+        .msg.user {
+            color: #00ffff;
+            text-shadow: 0 0 3px #00ffff;
+        }
+
+        .msg.ai {
+            color: #ff0055;
+            text-shadow: 0 0 3px #ff0055;
+            border-left: 3px solid #ff0055;
+            padding-left: 8px;
+        }
+
+        /* Alsó vezérlőpult */
+        .control-panel {
+            display: flex;
+            gap: 10px;
+            background-color: #111;
+            padding: 10px;
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+        }
+
+        .input-box {
+            flex: 1;
+            background-color: #000;
+            border: 1px solid #00ff3c;
+            color: #00ff3c;
+            padding: 12px;
+            font-size: 1rem;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .input-box:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 5px #00ffff;
+        }
+
+        /* Extrém piros gomb hangeffekt szimulációval */
+        .send-btn {
+            background: linear-gradient(180deg, #ff0000 0%, #880000 100%);
+            color: #ffffff;
+            border: none;
+            padding: 0 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 3px;
+            box-shadow: 0 0 10px #ff0000;
+            transition: all 0.1s ease;
+            text-transform: uppercase;
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 2px #ff0000;
+            background: #550000;
+        }
+
+        @keyframes pulse {
+            from { text-shadow: 0 0 8px #ff0000, 0 0 15px #550000; }
+            to { text-shadow: 0 0 15px #ff0000, 0 0 30px #ff0055; }
+        }
     </style>
 </head>
 <body>
+
     <div class="header">
         <div class="creator-tag">LÉTREHOZÓ: DOMINIK</div>
         <div class="title">CODEX AI v1.0</div>
     </div>
+
     <div class="display-container" id="display">
-        <div class="msg ai">SYSTEM // Extrém grafikus modul betöltve. Készen állok, Dominik főnök!</div>
+        <div class="msg ai">SYSTEM // Extrém grafikus modul betöltve. Készen állok a parancsokra, Dominik főnök!</div>
     </div>
+
     <div class="control-panel">
         <input type="text" class="input-box" id="user-input" placeholder="Írj be egy parancsot..." autocomplete="off">
         <button class="send-btn" id="send-btn">KÜLDÉS</button>
     </div>
+
     <script>
-        const display = document.getElementById("display");
-        const userInput = document.getElementById("user-input");
-        const sendBtn = document.getElementById("send-btn");
+        const display = document.getElementById('display');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+
         function appendMessage(text, type) {
-            const msgDiv = document.createElement("div");
-            msgDiv.classList.add("msg", type);
-            msgDiv.innerText = type === "user" ? `DOMINIK > \${text}` : `CODEX > \${text}`;
+            const msgDiv.innerText = type === "user" ? `DOMINIK > ${text}` : `CODEX > ${text}`;
             display.appendChild(msgDiv);
             display.scrollTop = display.scrollHeight;
         }
+
         async function sendToAI() {
             const text = userInput.value.trim();
             if (!text) return;
-            appendMessage(text, "user");
-            userInput.value = "";
-            const loadingDiv = document.createElement("div");
-            loadingDiv.classList.add("msg", "ai");
+
+            appendMessage(text, 'user');
+            userInput.value = '';
+
+            // Ideiglenes töltési üzenet a cyberpunk kijelzőn
+            const loadingDiv = document.createElement('div');
+            loadingDiv.classList.add('msg', 'ai');
             loadingDiv.innerText = "CODEX > Elemzés folyamatban...";
             display.appendChild(loadingDiv);
+            display.scrollTop = display.scrollHeight;
+
             try {
-                const response = await fetch("http://localhost:11434/api/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ model: "gemma2:2b", messages: [{ role: "user", content: text }], stream: false })
+                // Lokális Ollama elérés (Termux háttérbázis)
+                const response = await fetch('http://localhost:11434/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: 'gemma2:2b',
+                        messages: [{ role: 'user', content: text }],
+                        stream: false
+                    })
                 });
+
                 const data = await response.json();
-                loadingDiv.remove();
-                appendMessage(data.message.content, "ai");
+                loadingDiv.remove(); // Töltés törlése
+                appendMessage(data.message.content, 'ai');
+
             } catch (error) {
                 loadingDiv.remove();
-                appendMessage("HIBA: Az Ollama szerver nem válaszol.", "ai");
+                appendMessage("HIBA: Az Ollama szerver nem válaszol. Ellenőrizd a Termux futását!", 'ai');
             }
         }
-        sendBtn.addEventListener("click", sendToAI);
-        userInput.addEventListener("keypress", (e) => { if (e.key === "Enter") sendToAI(); });
+
+        sendBtn.addEventListener('click', sendToAI);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendToAI();
+        });
     </script>
 </body>
 </html>
