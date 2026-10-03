@@ -165,14 +165,17 @@
     </div>
 
     <script>
-        const display = document.getElementById('display');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
+    const display = document.getElementById('display');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
 
-            msgDiv.innerText = type === "user" ? "DOMINIK > " + text : "CODEX > " + text;
-    display.appendChild(msgDiv);
-    display.scrollTop = display.scrollHeight;
-}
+    function appendMessage(text, type) {
+        const msgDiv = document.createElement("div");
+        msgDiv.classList.add("msg", type);
+        msgDiv.innerText = type === "user" "DOMINIK > " + text : "CODEX > " + text;
+        display.appendChild(msgDiv);
+        display.scrollTop = display.scrollHeight;
+    }
 
         async function sendToAI() {
             const text = userInput.value.trim();
