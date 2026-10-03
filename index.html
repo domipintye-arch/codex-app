@@ -169,11 +169,10 @@
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
 
-        function appendMessage(text, type) {
-            const msgDiv.innerText = type === "user" ? `DOMINIK > ${text}` : `CODEX > ${text}`;
-            display.appendChild(msgDiv);
-            display.scrollTop = display.scrollHeight;
-        }
+            msgDiv.innerText = type === "user" ? "DOMINIK > " + text : "CODEX > " + text;
+    display.appendChild(msgDiv);
+    display.scrollTop = display.scrollHeight;
+}
 
         async function sendToAI() {
             const text = userInput.value.trim();
